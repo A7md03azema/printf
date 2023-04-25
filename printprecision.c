@@ -1,14 +1,14 @@
 #include "main.h"
 
 /**
- * get_precision - Calculates the precision for printing
- * @format: string
- * @i: input
- * @args: the arguments
- * Return: Precision
+ * get_precision - Calculates the precision for printing.
+ * @format: Formatted string in which to print the arguments
+ * @i: List of arguments to be printed.
+ * @list: list of arguments.
+ *
+ * Return: Precision.
  */
-
-int get_precision(const char *format, int *i, va_list args)
+int get_precision(const char *format, int *i, va_list list)
 {
 	int curr_i = *i + 1;
 	int precision = -1;
@@ -17,9 +17,8 @@ int get_precision(const char *format, int *i, va_list args)
 		return (precision);
 
 	precision = 0;
-	curr_i += 1;
 
-	while (format[curr_i] != '\0')
+	for (curr_i += 1; format[curr_i] != '\0'; curr_i++)
 	{
 		if (is_digit(format[curr_i]))
 		{
@@ -29,12 +28,11 @@ int get_precision(const char *format, int *i, va_list args)
 		else if (format[curr_i] == '*')
 		{
 			curr_i++;
-			precision = va_arg(args, int);
+			precision = va_arg(list, int);
 			break;
 		}
 		else
 			break;
-		curr_i++;
 	}
 
 	*i = curr_i - 1;
